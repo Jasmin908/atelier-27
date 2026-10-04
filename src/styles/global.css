@@ -1,0 +1,235 @@
+/* ATELIER 27 — tokens, base, grid and type system */
+
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  src: url('../assets/fonts/archivo-variable-latin.woff2') format('woff2-variations');
+}
+
+:root {
+  /* Palette — concrete and stone are sampled from the project images */
+  --ivory: #f3efe8;
+  --charcoal: #1f1e1c;
+  --concrete: #8b9498; /* lines only, never text */
+  --stone: #c9bfb2;
+  --ink-2: #5d5754; /* secondary text on ivory */
+  --ink-2-dark: #a19c98; /* secondary text on charcoal */
+  --red: #b44a35;
+
+  /* Grid */
+  --m: clamp(20px, 4.2vw, 72px);
+  --gutter: clamp(12px, 1.6vw, 28px);
+
+  /* Motion — one easing for everything */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --t-fast: 240ms;
+  --t-slow: 1100ms;
+
+  --nav-h: 72px;
+  --font: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+@media (max-width: 899px) {
+  :root {
+    --nav-h: 60px;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: var(--nav-h);
+}
+
+body {
+  margin: 0;
+  background: var(--ivory);
+  color: var(--charcoal);
+  font-family: var(--font);
+  font-size: 1rem;
+  line-height: 1.5;
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+p,
+ol,
+ul,
+dl,
+dd,
+figure {
+  margin: 0;
+  padding: 0;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+img,
+picture {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+/* ---------- Grid ---------- */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  padding-inline: var(--m);
+}
+
+/* ---------- Type ---------- */
+
+/* Large project and chapter typography */
+.display {
+  font-weight: 560;
+  font-stretch: 92%;
+  line-height: 0.94;
+  letter-spacing: -0.032em;
+  text-transform: uppercase;
+  hyphens: none;
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+
+.display .ln {
+  display: block;
+  white-space: nowrap;
+}
+
+/* Very small technical labels */
+.label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  font-stretch: 104%;
+  line-height: 1.5;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  hyphens: none;
+}
+
+.label .ln {
+  display: block;
+}
+
+.body {
+  font-size: clamp(1.0625rem, 0.45vw + 0.95rem, 1.25rem);
+  line-height: 1.5;
+  letter-spacing: -0.004em;
+  max-width: 34em;
+  hyphens: manual;
+}
+
+.body--secondary {
+  color: var(--ink-2);
+}
+
+.index {
+  color: var(--red);
+}
+
+/* ---------- Utilities ---------- */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 200;
+  padding: 14px 18px;
+  background: var(--charcoal);
+  color: var(--ivory);
+  transform: translateY(-200%);
+}
+
+.skip:focus {
+  transform: none;
+}
+
+/* Fixed line breaks that only apply on mobile / on every viewport */
+.br-m {
+  display: none;
+}
+
+@media (max-width: 899px) {
+  .br-m {
+    display: inline;
+  }
+}
+
+/* ---------- Straight masked image reveal ---------- */
+/* Only active with JS; without it the image is simply visible.
+   The mask is on the inner picture: the observed figure itself must stay
+   unclipped, otherwise it would only count as visible along its top edge. */
+
+.js .reveal picture {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path var(--t-slow) var(--ease);
+}
+
+.js .reveal.is-in picture {
+  clip-path: inset(0 0 0 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal picture {
+    clip-path: none;
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

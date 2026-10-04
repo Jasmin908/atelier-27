@@ -1,0 +1,143 @@
+---
+import type { Locale } from '../config/site';
+import { getCopy } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const t = getCopy(Astro.props.locale);
+---
+
+<section class="services grid" id={t.ids.services} data-nav="ink" aria-labelledby="services-title">
+  <h2 class="services__label label" id="services-title">{t.services.label}</h2>
+
+  <p class="services__support body">{t.services.support}</p>
+
+  <ol class="services__rows">
+    {
+      t.services.rows.map((row, i) => (
+        <li class="row">
+          <span class="row__n label" aria-hidden="true">
+            0{i + 1}
+          </span>
+          <span class="row__title display">{row.title}</span>
+          <span class="row__detail">{row.detail}</span>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .services {
+    background: var(--ivory);
+    padding-block: clamp(96px, 16vh, 180px) clamp(96px, 16vh, 200px);
+    align-items: start;
+    row-gap: clamp(48px, 8vh, 96px);
+  }
+
+  .services__label {
+    grid-column: 1 / -1;
+  }
+
+  .services__support {
+    grid-column: 1 / 5;
+    max-width: 22em;
+  }
+
+  .services__rows {
+    grid-column: 6 / -1;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 1fr) auto;
+    column-gap: var(--gutter);
+    align-items: baseline;
+    padding-block: clamp(20px, 2.2vw, 34px) clamp(18px, 2vw, 30px);
+    border-top: 1px solid var(--charcoal);
+  }
+
+  .row:last-child {
+    border-bottom: 1px solid var(--charcoal);
+  }
+
+  .row__n {
+    transition: color var(--t-fast) var(--ease);
+  }
+
+  .row__title {
+    font-size: clamp(1.75rem, 3.1vw, 3.75rem);
+    line-height: 1;
+  }
+
+  .row__detail {
+    font-size: clamp(1rem, 0.3vw + 0.92rem, 1.125rem);
+    color: var(--ink-2);
+    text-align: right;
+    transition: transform var(--t-fast) var(--ease);
+  }
+
+  @media (hover: hover) {
+    .row:hover .row__n {
+      color: var(--red);
+    }
+
+    .row:hover .row__detail {
+      transform: translateX(-8px);
+    }
+  }
+
+  @media (max-width: 1199px) and (min-width: 900px) {
+    .services__support {
+      grid-column: 1 / 5;
+    }
+
+    .row {
+      grid-template-columns: 3rem minmax(0, 1fr);
+    }
+
+    .row__detail {
+      grid-column: 2;
+      text-align: left;
+      margin-top: 8px;
+    }
+
+    .row:hover .row__detail {
+      transform: translateX(8px);
+    }
+  }
+
+  @media (max-width: 899px) {
+    .services {
+      padding-block: 88px 96px;
+      row-gap: 0;
+    }
+
+    .services__support {
+      grid-column: 1 / -1;
+      margin-top: 40px;
+    }
+
+    .services__rows {
+      grid-column: 1 / -1;
+      margin-top: 56px;
+    }
+
+    .row {
+      grid-template-columns: 2.5rem minmax(0, 1fr);
+      padding-block: 22px 20px;
+    }
+
+    .row__title {
+      font-size: min(7.4vw, 3rem);
+    }
+
+    .row__detail {
+      grid-column: 2;
+      text-align: left;
+      margin-top: 8px;
+    }
+  }
+</style>

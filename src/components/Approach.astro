@@ -1,0 +1,311 @@
+---
+import type { Locale } from '../config/site';
+import { getCopy } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const t = getCopy(Astro.props.locale);
+---
+
+<section class="approach" id={t.ids.approach} data-nav="ink" data-approach aria-labelledby="approach-title">
+  <div class="approach__stage">
+    <!-- The one travelling line: resolves onto the left edge of the statement -->
+    <div class="approach__travel grid" aria-hidden="true">
+      <div class="travel"><i class="travel__line"></i></div>
+    </div>
+
+    <div class="approach__content grid">
+      <p class="approach__label label">{t.approach.label}</p>
+
+      <h2 class="approach__title display" id="approach-title">
+        {
+          t.approach.statement.map((seg) => (
+            <>
+              {seg.t}
+              {seg.br === 'all' && <br />}
+              {seg.br === 'mobile' && (
+                <>
+                  {' '}
+                  <br class="br-m" />
+                </>
+              )}
+            </>
+          ))
+        }
+      </h2>
+
+      <!-- Lower zone: thin architectural grid that carries the text columns -->
+      <div class="approach__lower">
+        <i class="gh" aria-hidden="true"></i>
+        <i class="gl gl--7" aria-hidden="true"></i>
+        <i class="gl gl--11" aria-hidden="true"></i>
+        <i class="gl gl--end" aria-hidden="true"></i>
+        <b class="mark" aria-hidden="true"></b>
+
+        <p class="approach__body body">{t.approach.body}</p>
+        <p class="approach__secondary body body--secondary">{t.approach.secondary}</p>
+        <p class="approach__meta label">
+          {t.approach.meta.map((line) => <span class="ln">{line}</span>)}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .approach {
+    position: relative;
+    background: var(--ivory);
+    /* 0 = line off-grid, 1 = resolved. Without JS the composition is resolved. */
+    --p: 1;
+    --pad-top: clamp(96px, 16vh, 180px);
+    --pad-bottom: clamp(72px, 12vh, 140px);
+  }
+
+  :global(.js) .approach {
+    --p: 0;
+  }
+
+  .approach__stage {
+    position: relative;
+    overflow: hidden;
+    padding-block: var(--pad-top) var(--pad-bottom);
+  }
+
+  .approach__travel {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  /* Starts off-grid on the right and resolves onto column line 3 */
+  .travel {
+    grid-column: 3 / 11;
+    width: 91%;
+    height: 100%;
+  }
+
+  .travel__line {
+    display: block;
+    height: 100%;
+    border-left: 1px solid var(--charcoal);
+    transform: translate3d(calc((1 - var(--p)) * 100%), 0, 0);
+    will-change: transform;
+  }
+
+  .approach__content {
+    position: relative;
+    row-gap: clamp(28px, 5vh, 56px);
+  }
+
+  .approach__label {
+    grid-column: 1 / 3;
+  }
+
+  .approach__title {
+    grid-column: 3 / -1;
+    font-size: min(5.5vw, 10vh);
+    padding-left: 0.16em;
+    margin-top: -0.12em;
+  }
+
+  .approach__lower {
+    position: relative;
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+    margin-top: clamp(8px, 2vh, 28px);
+    padding-top: clamp(22px, 3.4vh, 36px);
+  }
+
+  /* Static hairlines: one horizontal, three verticals running out of the frame */
+  .gh {
+    height: 1px;
+    background: var(--stone);
+    grid-column: 3 / -1;
+    grid-row: 1;
+    margin-top: calc(clamp(22px, 3.4vh, 36px) * -1);
+    align-self: start;
+  }
+
+  .gl {
+    position: relative;
+    grid-row: 1;
+    align-self: start;
+    width: 1px;
+    height: 0;
+  }
+
+  .gl::before {
+    content: '';
+    position: absolute;
+    top: calc(clamp(22px, 3.4vh, 36px) * -1);
+    left: 0;
+    width: 1px;
+    height: 150vh;
+    background: var(--stone);
+  }
+
+  .gl--7 {
+    grid-column: 7;
+  }
+
+  .gl--11 {
+    grid-column: 11;
+  }
+
+  .gl--end {
+    grid-column: 12;
+    justify-self: end;
+  }
+
+  /* Small red marker where the travelling line meets the grid; appears once settled */
+  .mark {
+    grid-column: 3;
+    grid-row: 1;
+    align-self: start;
+    width: 7px;
+    height: 7px;
+    margin: calc(clamp(22px, 3.4vh, 36px) * -1 - 3px) 0 0 -3px;
+    background: var(--red);
+    opacity: clamp(0, calc((var(--p) - 0.97) * 40), 1);
+  }
+
+  .approach__body,
+  .approach__secondary,
+  .approach__meta {
+    grid-row: 1;
+    padding-left: 0.9rem;
+  }
+
+  .approach__body {
+    grid-column: 3 / 7;
+    padding-right: 0.5rem;
+  }
+
+  .approach__secondary {
+    grid-column: 7 / 11;
+    padding-right: 0.5rem;
+  }
+
+  .approach__meta {
+    grid-column: 11 / -1;
+    color: var(--ink-2);
+  }
+
+  .approach__meta .ln {
+    white-space: nowrap;
+  }
+
+  /* Small desktop: give the coordinates a wider column */
+  @media (min-width: 900px) and (max-width: 1399px) {
+    .gl--11 {
+      grid-column: 10;
+    }
+
+    .approach__secondary {
+      grid-column: 7 / 10;
+    }
+
+    .approach__meta {
+      grid-column: 10 / -1;
+    }
+  }
+
+  /* Desktop: a short sticky hold (about 60vh of scroll) while the line resolves */
+  @media (min-width: 900px) and (min-height: 640px) and (prefers-reduced-motion: no-preference) {
+    :global(.js) .approach {
+      height: 160vh;
+    }
+
+    :global(.js) .approach__stage {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding-block: 0;
+      display: grid;
+      align-content: center;
+    }
+  }
+
+  /* Mobile: no hold. One line travels a short distance and settles. */
+  @media (max-width: 899px) {
+    .approach {
+      --pad-top: 88px;
+      --pad-bottom: 96px;
+    }
+
+    .travel {
+      grid-column: 1 / -1;
+      width: auto;
+      margin-left: -10px;
+    }
+
+    .travel__line {
+      transform: translate3d(calc((1 - var(--p)) * 34px), 0, 0);
+    }
+
+    .approach__content {
+      row-gap: 0;
+    }
+
+    .approach__label,
+    .approach__title {
+      grid-column: 1 / -1;
+      padding-left: 0;
+    }
+
+    .approach__title {
+      font-size: min(11.6vw, 5.4rem);
+      margin-top: 40px;
+    }
+
+    .approach__lower {
+      display: block;
+      margin-top: 44px;
+      padding-top: 28px;
+    }
+
+    .gl {
+      display: none;
+    }
+
+    .gh {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: -10px;
+      right: calc(var(--m) * -1);
+      margin: 0;
+    }
+
+    .mark {
+      position: absolute;
+      top: -3px;
+      left: -13px;
+      margin: 0;
+    }
+
+    .approach__body,
+    .approach__secondary,
+    .approach__meta {
+      padding-inline: 0;
+    }
+
+    .approach__secondary {
+      margin-top: 20px;
+    }
+
+    .approach__meta {
+      margin-top: 56px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js) .approach {
+      --p: 1;
+    }
+  }
+</style>

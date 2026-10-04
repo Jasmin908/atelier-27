@@ -1,0 +1,423 @@
+---
+import Picture from './Picture.astro';
+import type { Locale } from '../config/site';
+import { getCopy } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getCopy(locale);
+const p = t.projects;
+---
+
+<section class="projects" id={t.ids.projects} data-nav="ink" aria-labelledby="projects-title">
+  <header class="projects__head grid">
+    <h2 class="label" id="projects-title">{p.label}</h2>
+    <p class="label projects__count" aria-hidden="true">01 — 03</p>
+  </header>
+
+  <!-- 01 · HAUS AM HANG: tall material crop, oversized cropped numeral -->
+  <article class="p1 grid" aria-labelledby="p1-title">
+    <span class="p1__numeral display" aria-hidden="true">01</span>
+    <div class="p1__text">
+      <h3 class={`p1__title display p1__title--${locale}`} id="p1-title">
+        {p.hausAmHang.title.map((line) => <span class="ln">{line} </span>)}
+      </h3>
+      <p class="label index">01 / 03</p>
+      <p class="label p-meta">
+        {p.hausAmHang.meta.map((line) => <span class="ln">{line}</span>)}
+      </p>
+      <p class="body">{p.hausAmHang.body}</p>
+    </div>
+    <figure class="p1__figure reveal" data-reveal>
+      <Picture
+        desktop="haus-am-hang-detail"
+        alt={p.hausAmHang.alt}
+        sizes="(max-width: 899px) 92vw, 40vw"
+      />
+    </figure>
+  </article>
+
+  <!-- 02 · HOF 08: title runs from the page margin into the calm wall -->
+  <article class="p2" aria-labelledby="p2-title">
+    <div class="p2__stage">
+      <figure class="p2__figure reveal" data-reveal>
+        <Picture
+          desktop="hof-08-wide"
+          mobile="hof-08-portrait"
+          alt={p.hof08.alt}
+          sizes="72vw"
+          mobileSizes="92vw"
+        />
+      </figure>
+      <h3 class="p2__title display" id="p2-title">{p.hof08.title[0]}</h3>
+      <div class="p2__meta">
+        <p class="label index">02 / 03</p>
+        <p class="label p-meta">
+          {p.hof08.meta.map((line) => <span class="ln">{line}</span>)}
+        </p>
+        <i class="p2__note" aria-hidden="true"></i>
+      </div>
+    </div>
+    <div class="grid">
+      <p class="p2__body body">{p.hof08.body}</p>
+    </div>
+  </article>
+
+  <!-- 03 · CASA LINEA: full-bleed, title in the sky -->
+  <article class="p3" aria-labelledby="p3-title">
+    <div class="p3__stage">
+      <figure class="p3__figure reveal" data-reveal>
+        <Picture
+          desktop="casa-linea-wide"
+          mobile="casa-linea-portrait"
+          alt={p.casaLinea.alt}
+          sizes="100vw"
+        />
+      </figure>
+      <h3 class="p3__title display" id="p3-title">
+        {p.casaLinea.title.map((line) => <span class="ln">{line} </span>)}
+      </h3>
+    </div>
+    <div class="p3__text grid">
+      <div class="p3__meta">
+        <p class="label index">03 / 03</p>
+        <p class="label p-meta">
+          {p.casaLinea.meta.map((line) => <span class="ln">{line}</span>)}
+        </p>
+      </div>
+      <p class="p3__body body">{p.casaLinea.body}</p>
+    </div>
+  </article>
+</section>
+
+<style>
+  .projects {
+    background: var(--ivory);
+    padding-top: clamp(40px, 8vh, 96px);
+    overflow: hidden;
+    overflow: clip;
+  }
+
+  .projects__head {
+    align-items: baseline;
+    padding-top: 18px;
+    position: relative;
+  }
+
+  .projects__head::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: var(--m);
+    right: var(--m);
+    height: 1px;
+    background: var(--charcoal);
+  }
+
+  .projects__head h2 {
+    grid-column: 1 / 11;
+    white-space: nowrap;
+  }
+
+  .projects__count {
+    grid-column: 11 / -1;
+    white-space: nowrap;
+    justify-self: end;
+    color: var(--ink-2);
+  }
+
+  figure :global(picture),
+  figure :global(img) {
+    width: 100%;
+    height: auto;
+  }
+
+  .p-meta {
+    color: var(--ink-2);
+  }
+
+  /* ---------- 01 ---------- */
+
+  .p1 {
+    position: relative;
+    align-items: start;
+    padding-top: clamp(72px, 14vh, 180px);
+  }
+
+  .p1__numeral {
+    position: absolute;
+    top: clamp(24px, 5vh, 72px);
+    left: -0.09em;
+    font-size: 36vw;
+    font-weight: 620;
+    line-height: 0.8;
+    letter-spacing: -0.05em;
+    color: #e6e0d6;
+    user-select: none;
+  }
+
+  .p1__text {
+    position: relative;
+    grid-column: 1 / 7;
+    grid-row: 1;
+    padding-top: 13vw;
+  }
+
+  /* The index sits with the metadata, clear of the large numeral */
+  .p1__text .index {
+    margin-top: clamp(28px, 4vw, 56px);
+    margin-left: calc((100% + var(--gutter)) / 6);
+  }
+
+  .p1__title--de {
+    font-size: 8.6vw;
+  }
+
+  .p1__title--en {
+    font-size: 6.3vw;
+  }
+
+  .p1__text .p-meta {
+    margin-top: 14px;
+    margin-left: calc((100% + var(--gutter)) / 6);
+  }
+
+  .p1__text .body {
+    margin-top: 24px;
+    margin-left: calc((100% + var(--gutter)) / 6);
+    max-width: 27em;
+  }
+
+  .p1__figure {
+    position: relative;
+    grid-column: 8 / -1;
+    grid-row: 1;
+  }
+
+  /* ---------- 02 ---------- */
+
+  .p2 {
+    padding-top: clamp(120px, 22vh, 260px);
+  }
+
+  .p2__stage {
+    position: relative;
+  }
+
+  .p2__figure {
+    width: 72vw;
+    margin-left: auto;
+  }
+
+  /* The wall occupies the left 26% of the image (18.7vw); the title must end inside it */
+  .p2__title {
+    position: absolute;
+    top: 9%;
+    left: var(--m);
+    font-size: 10.6vw;
+    white-space: nowrap;
+  }
+
+  .p2__meta {
+    position: absolute;
+    left: var(--m);
+    bottom: 12%;
+    width: calc(28vw - var(--m));
+  }
+
+  .p2__meta .p-meta {
+    margin-top: 14px;
+  }
+
+  /* Tiny annotation line from the metadata to the image edge */
+  .p2__note {
+    display: block;
+    position: relative;
+    height: 1px;
+    margin-top: 16px;
+    width: calc(100% + 14px);
+    background: var(--red);
+  }
+
+  .p2__note::after {
+    content: '';
+    position: absolute;
+    right: -2px;
+    top: -2px;
+    width: 5px;
+    height: 5px;
+    background: var(--red);
+  }
+
+  .p2__body {
+    grid-column: 7 / 12;
+    margin-top: clamp(28px, 4vw, 56px);
+  }
+
+  /* ---------- 03 ---------- */
+
+  .p3 {
+    padding-top: clamp(120px, 22vh, 260px);
+    padding-bottom: clamp(96px, 18vh, 220px);
+  }
+
+  .p3__stage {
+    position: relative;
+  }
+
+  .p3__title {
+    position: absolute;
+    top: 4.2vw;
+    left: var(--m);
+    font-size: 8.8vw;
+  }
+
+  .p3__text {
+    margin-top: clamp(28px, 4vw, 56px);
+    align-items: start;
+  }
+
+  .p3__meta {
+    grid-column: 1 / 5;
+  }
+
+  .p3__meta .p-meta {
+    margin-top: 14px;
+  }
+
+  .p3__body {
+    grid-column: 7 / 12;
+  }
+
+  /* ---------- Mobile / tablet portrait ---------- */
+
+  @media (max-width: 899px) {
+    .p1 {
+      padding-top: 88px;
+    }
+
+    .p1__numeral {
+      top: 36px;
+      left: auto;
+      right: -0.2em;
+      font-size: 58vw;
+    }
+
+    /* Order: title, image, index, metadata, text */
+    .p1__text {
+      display: contents;
+    }
+
+    .p1 > :not(.p1__numeral),
+    .p1__text > * {
+      position: relative;
+      grid-column: 1 / -1;
+      grid-row: auto;
+    }
+
+    .p1__title {
+      order: 1;
+      margin-top: 34vw;
+    }
+
+    .p1__text .index {
+      order: 4;
+      margin: 24px 0 0;
+    }
+
+    .p1__title--de {
+      font-size: 17vw;
+    }
+
+    .p1__title--en {
+      font-size: 12.4vw;
+    }
+
+    /* Image keeps the left margin and bleeds off the right edge */
+    .p1__figure {
+      order: 3;
+      margin-top: 36px;
+      margin-right: calc(var(--m) * -1);
+    }
+
+    .p1__text .p-meta {
+      order: 5;
+      margin: 14px 0 0;
+    }
+
+    .p1__text .body {
+      order: 6;
+      margin: 20px 0 0;
+    }
+
+    .p2 {
+      padding-top: 112px;
+    }
+
+    /* Order: index, title, image, metadata, text */
+    .p2__stage {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .p2__meta {
+      display: contents;
+    }
+
+    .p2__meta .index {
+      order: 1;
+      margin-inline: var(--m);
+    }
+
+    .p2__title {
+      position: static;
+      order: 2;
+      margin: 20px var(--m) 0;
+      font-size: 22vw;
+    }
+
+    /* Image bleeds off the left edge and keeps the right margin */
+    .p2__figure {
+      order: 3;
+      width: auto;
+      margin: 36px var(--m) 0 0;
+    }
+
+    .p2__meta .p-meta {
+      order: 4;
+      margin: 24px var(--m) 0;
+    }
+
+    .p2__note {
+      display: none;
+    }
+
+    .p2__body,
+    .p3__meta,
+    .p3__body {
+      grid-column: 1 / -1;
+    }
+
+    .p2__body {
+      margin-top: 20px;
+    }
+
+    .p3 {
+      padding-top: 112px;
+      padding-bottom: 96px;
+    }
+
+    .p3__title {
+      top: 9vw;
+      font-size: 19vw;
+    }
+
+    .p3__text {
+      margin-top: 24px;
+      row-gap: 20px;
+    }
+  }
+</style>

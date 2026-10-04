@@ -1,0 +1,108 @@
+---
+import FormaLink from './FormaLink.astro';
+import type { Locale } from '../config/site';
+import { getCopy } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const t = getCopy(Astro.props.locale);
+---
+
+<section class="forma grid" id={t.ids.contact} data-nav="paper" aria-labelledby="forma-title">
+  <p class="forma__meta label">{t.forma.meta}</p>
+
+  <h2 class="forma__title display" id="forma-title">
+    {t.forma.title.map((line) => <span class="ln">{line} </span>)}
+  </h2>
+
+  <p class="forma__body body">{t.forma.body}</p>
+
+  <p class="forma__cta-wrap">
+    <FormaLink class="forma__cta">{t.forma.cta}</FormaLink>
+  </p>
+</section>
+
+<style>
+  /* Flat architectural red. Ivory on red is 4.6:1. */
+  .forma {
+    background: var(--red);
+    color: var(--ivory);
+    padding-block: clamp(110px, 18vh, 200px) clamp(96px, 16vh, 180px);
+    align-items: start;
+  }
+
+  .forma__meta {
+    grid-column: 1 / -1;
+  }
+
+  .forma__title {
+    grid-column: 1 / -1;
+    font-size: min(9.4vw, 11.5rem);
+    margin-top: clamp(40px, 7vh, 88px);
+  }
+
+  .forma__body {
+    grid-column: 1 / 6;
+    margin-top: clamp(56px, 8vw, 120px);
+  }
+
+  .forma__cta-wrap {
+    grid-column: 7 / -1;
+    margin-top: clamp(56px, 8vw, 120px);
+    justify-self: end;
+    align-self: end;
+  }
+
+  .forma :global(.forma__cta) {
+    display: inline-flex;
+    align-items: baseline;
+    min-height: 44px;
+    padding-block: 12px 10px;
+    border-top: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+    font-size: clamp(1rem, 1.25vw, 1.375rem);
+    font-weight: 560;
+    font-stretch: 104%;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .forma :global(a.forma__cta) {
+    transition: padding var(--t-fast) var(--ease);
+  }
+
+  .forma :global(a.forma__cta:hover) {
+    padding-inline: 8px 0;
+  }
+
+  @media (max-width: 899px) {
+    .forma {
+      padding-block: 96px 88px;
+    }
+
+    .forma__title {
+      font-size: min(12.4vw, 6rem);
+      margin-top: 36px;
+    }
+
+    .forma__body {
+      grid-column: 1 / -1;
+      margin-top: 48px;
+    }
+
+    .forma__cta-wrap {
+      grid-column: 1 / -1;
+      justify-self: stretch;
+      margin-top: 48px;
+    }
+
+    .forma :global(.forma__cta) {
+      display: flex;
+      justify-content: space-between;
+      padding-block: 16px 14px;
+    }
+  }
+</style>

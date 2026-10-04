@@ -1,0 +1,260 @@
+---
+import { LOCALES, type Locale } from '../config/site';
+import { getCopy } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getCopy(locale);
+const links = [
+  { href: `#${t.ids.projects}`, text: t.nav.projects },
+  { href: `#${t.ids.studio}`, text: t.nav.studio },
+  { href: `#${t.ids.services}`, text: t.nav.services },
+  { href: `#${t.ids.contact}`, text: t.nav.contact },
+];
+const langs = (['de', 'en'] as const).map((code) => ({
+  code,
+  href: LOCALES[code].path,
+  hreflang: LOCALES[code].hreflang,
+  current: code === locale,
+}));
+---
+
+<header class="nav label" data-nav-root data-theme="ink">
+  <a class="nav__mark" href={LOCALES[locale].path}>ATELIER 27</a>
+
+  <nav class="nav__links" aria-label={t.nav.label}>
+    <ul>
+      {
+        links.map((l) => (
+          <li>
+            <a href={l.href}>{l.text}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  <ul class="nav__lang" aria-label={t.nav.language}>
+    {
+      langs.map((l, i) => (
+        <li>
+          {i > 0 && <span aria-hidden="true">/</span>}
+          <a href={l.href} lang={l.hreflang} hreflang={l.hreflang} aria-current={l.current ? 'true' : undefined}>
+            {l.code.toUpperCase()}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <button
+    class="nav__toggle"
+    type="button"
+    aria-expanded="false"
+    aria-controls="menu"
+    data-menu-toggle
+    data-label-open={t.nav.menu}
+    data-label-close={t.nav.close}
+  >
+    {t.nav.menu}
+  </button>
+</header>
+
+<div class="menu" id="menu" hidden data-menu>
+  <nav aria-label={t.nav.label}>
+    <ol>
+      {
+        links.map((l, i) => (
+          <li>
+            <a href={l.href} data-menu-link>
+              <span class="label menu__n" aria-hidden="true">
+                0{i + 1}
+              </span>
+              <span class="display menu__t">{l.text}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </nav>
+</div>
+
+<style>
+  .nav {
+    position: absolute;
+    inset: 0 0 auto 0;
+    z-index: 100;
+    height: var(--nav-h);
+    padding-inline: var(--m);
+    display: flex;
+    align-items: center;
+    gap: clamp(20px, 3vw, 48px);
+    color: var(--charcoal);
+    transition:
+      transform 320ms var(--ease),
+      color var(--t-fast) var(--ease);
+  }
+
+  :global(.js) .nav {
+    position: fixed;
+  }
+
+  .nav[data-theme='paper'] {
+    color: var(--ivory);
+  }
+
+  /* Hidden while scrolling down; always shown for keyboard focus and open menu */
+  .nav.is-hidden:not(:focus-within):not(.is-open) {
+    transform: translateY(-100%);
+  }
+
+  .nav.is-open {
+    color: var(--charcoal);
+  }
+
+  .nav__mark {
+    margin-right: auto;
+    font-weight: 650;
+    letter-spacing: 0.16em;
+  }
+
+  .nav a,
+  .nav__toggle {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .nav__links ul,
+  .nav__lang {
+    display: flex;
+    align-items: center;
+  }
+
+  .nav__links ul {
+    gap: clamp(18px, 2.4vw, 40px);
+  }
+
+  .nav__links a,
+  .nav__lang a {
+    position: relative;
+  }
+
+  /* Hairline under link: hover and current language */
+  .nav__links a::after,
+  .nav__lang a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0.13em;
+    bottom: 11px;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--t-fast) var(--ease);
+  }
+
+  .nav__links a:hover::after,
+  .nav__lang a:hover::after,
+  .nav__lang a[aria-current]::after {
+    transform: scaleX(1);
+  }
+
+  .nav__lang li {
+    display: flex;
+    align-items: center;
+  }
+
+  .nav__lang a {
+    min-width: 32px;
+    justify-content: center;
+    padding-left: 0.13em;
+  }
+
+  .nav__lang a::after {
+    left: 7px;
+    right: 7px;
+  }
+
+  .nav__toggle {
+    display: none;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    font-weight: inherit;
+    font-stretch: inherit;
+    font-size: inherit;
+    min-width: 44px;
+    justify-content: flex-end;
+  }
+
+  .menu {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    background: var(--ivory);
+    color: var(--charcoal);
+    padding: calc(var(--nav-h) + 6vh) var(--m) var(--m);
+    overflow-y: auto;
+  }
+
+  .menu[hidden] {
+    display: none;
+  }
+
+  .menu li {
+    border-top: 1px solid var(--charcoal);
+  }
+
+  .menu li:last-child {
+    border-bottom: 1px solid var(--charcoal);
+  }
+
+  .menu a {
+    display: grid;
+    grid-template-columns: 2.6rem 1fr;
+    align-items: baseline;
+    padding-block: 18px 16px;
+    min-height: 44px;
+  }
+
+  .menu__n {
+    color: var(--red);
+  }
+
+  .menu__t {
+    font-size: clamp(2rem, 10.5vw, 4.5rem);
+  }
+
+  @media (max-width: 899px) {
+    .nav {
+      gap: 6px;
+    }
+
+    .nav__lang a {
+      min-width: 44px;
+    }
+
+    .nav__lang a::after {
+      left: 13px;
+      right: 13px;
+    }
+
+    .nav__links {
+      display: none;
+    }
+
+    .nav__toggle {
+      display: inline-flex;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .menu {
+      display: none;
+    }
+  }
+</style>

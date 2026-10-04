@@ -1,0 +1,30 @@
+---
+// Ivory to charcoal in three flat tonal planes of diminishing height.
+---
+
+<div class="planes" aria-hidden="true">
+  <div class="plane plane--1" data-nav="ink"></div>
+  <div class="plane plane--2" data-nav="paper"></div>
+  <div class="plane plane--3" data-nav="paper"></div>
+</div>
+
+<style>
+  .planes {
+    background: var(--charcoal);
+  }
+
+  .plane--1 {
+    height: clamp(56px, 11vh, 120px);
+    background: #dcd6cd;
+  }
+
+  .plane--2 {
+    height: clamp(28px, 5vh, 56px);
+    background: #6f6b66;
+  }
+
+  .plane--3 {
+    height: clamp(14px, 2.5vh, 28px);
+    background: #383633;
+  }
+</style>

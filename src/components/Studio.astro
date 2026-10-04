@@ -1,0 +1,165 @@
+---
+import type { Locale } from '../config/site';
+import { getCopy } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const t = getCopy(Astro.props.locale);
+---
+
+<section class="studio" id={t.ids.studio} data-nav="paper" data-studio aria-labelledby="studio-title">
+  <span class="studio__27 display" aria-hidden="true">27</span>
+
+  <div class="studio__content grid">
+    <p class="studio__label label">{t.studio.label}</p>
+
+    <h2 class="studio__title display" id="studio-title">
+      {t.studio.title.map((line) => <span class="ln">{line} </span>)}
+    </h2>
+
+    <p class="studio__body body">{t.studio.body}</p>
+
+    <dl class="studio__facts">
+      {
+        t.studio.facts.map((fact) => (
+          <div class="fact">
+            <dt class="label">{fact.term}</dt>
+            {fact.items.map((item) => <dd>{item}</dd>)}
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>
+
+<style>
+  .studio {
+    position: relative;
+    background: var(--charcoal);
+    color: var(--ivory);
+    overflow: hidden;
+    overflow: clip;
+    padding-block: clamp(96px, 16vh, 180px) clamp(88px, 14vh, 160px);
+    --y: 0;
+  }
+
+  /* Enormous 27, tone on tone, leaving the viewport on the right */
+  .studio__27 {
+    position: absolute;
+    top: -0.04em;
+    right: -0.13em;
+    font-size: 66vw;
+    font-weight: 640;
+    font-stretch: 100%;
+    line-height: 0.8;
+    letter-spacing: -0.06em;
+    color: #2b2a27;
+    user-select: none;
+    transform: translate3d(0, calc(var(--y) * 1px), 0);
+    will-change: transform;
+  }
+
+  .studio__content {
+    position: relative;
+    row-gap: 0;
+  }
+
+  .studio__label {
+    grid-column: 1 / -1;
+  }
+
+  .studio__title {
+    grid-column: 1 / -1;
+    font-size: 4.9vw;
+    margin-top: clamp(140px, 24vw, 420px);
+  }
+
+  .studio__body {
+    grid-column: 1 / 6;
+    margin-top: clamp(36px, 5vw, 72px);
+  }
+
+  .studio__facts {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--gutter);
+    margin-top: clamp(72px, 10vw, 160px);
+    padding-top: 18px;
+    border-top: 1px solid rgb(243 239 232 / 0.28);
+  }
+
+  .fact {
+    grid-column: span 3;
+  }
+
+  .fact dt {
+    color: var(--ink-2-dark);
+    margin-bottom: 14px;
+  }
+
+  .fact dd {
+    font-size: clamp(1.0625rem, 0.45vw + 0.95rem, 1.25rem);
+    line-height: 1.45;
+  }
+
+  @media (max-width: 899px) {
+    .studio {
+      padding-block: 88px 80px;
+    }
+
+    .studio__27 {
+      top: 0.02em;
+      right: -0.16em;
+      font-size: 112vw;
+    }
+
+    .studio__title {
+      font-size: min(7.6vw, 3.6rem);
+      margin-top: 78vw;
+    }
+
+    .studio__title .ln {
+      white-space: normal;
+    }
+
+    .studio__body {
+      grid-column: 1 / -1;
+      margin-top: 32px;
+    }
+
+    .studio__facts {
+      display: block;
+      margin-top: 64px;
+      padding-top: 0;
+      border-top: 0;
+    }
+
+    .fact {
+      display: grid;
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      column-gap: var(--gutter);
+      padding-block: 16px;
+      border-top: 1px solid rgb(243 239 232 / 0.28);
+    }
+
+    .fact dt {
+      grid-column: 1;
+      grid-row: 1 / span 3;
+      margin: 0;
+      padding-top: 0.3em;
+    }
+
+    .fact dd {
+      grid-column: 2;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .studio__27 {
+      transform: none;
+    }
+  }
+</style>

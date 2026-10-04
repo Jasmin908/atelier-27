@@ -1,0 +1,66 @@
+---
+import '../styles/global.css';
+import fontUrl from '../assets/fonts/archivo-variable-latin.woff2?url';
+import manifest from '../data/images.json';
+import { ALLOW_INDEXING, LOCALES, SITE_URL, type Locale } from '../config/site';
+import { getCopy } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getCopy(locale);
+const set = (list: { src: string; width: number }[]) => list.map((i) => `${i.src} ${i.width}w`).join(', ');
+const heroWide = manifest['haus-am-hang-wide'];
+const heroPortrait = manifest['haus-am-hang-portrait'];
+---
+
+<!doctype html>
+<html lang={LOCALES[locale].htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{t.metaTitle}</title>
+    <meta name="description" content={t.metaDescription} />
+    {!ALLOW_INDEXING && <meta name="robots" content="noindex, nofollow" />}
+    {
+      SITE_URL && (
+        <>
+          <link rel="canonical" href={SITE_URL + LOCALES[locale].path} />
+          <link rel="alternate" hreflang={LOCALES.de.hreflang} href={SITE_URL + LOCALES.de.path} />
+          <link rel="alternate" hreflang={LOCALES.en.hreflang} href={SITE_URL + LOCALES.en.path} />
+          <link rel="alternate" hreflang="x-default" href={SITE_URL + LOCALES.de.path} />
+        </>
+      )
+    }
+    <meta name="theme-color" content="#F3EFE8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" as="font" type="font/woff2" href={fontUrl} crossorigin />
+    <link
+      rel="preload"
+      as="image"
+      type="image/avif"
+      media="(max-width: 899px)"
+      imagesrcset={set(heroPortrait.avif)}
+      imagesizes="100vw"
+      fetchpriority="high"
+    />
+    <link
+      rel="preload"
+      as="image"
+      type="image/avif"
+      media="(min-width: 900px)"
+      imagesrcset={set(heroWide.avif)}
+      imagesizes="100vw"
+      fetchpriority="high"
+    />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+  </head>
+  <body>
+    <a class="skip label" href="#main">{t.skip}</a>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from './Nav.astro';
+import Hero from './Hero.astro';
+import Approach from './Approach.astro';
+import Projects from './Projects.astro';
+import Transition from './Transition.astro';
+import Studio from './Studio.astro';
+import Services from './Services.astro';
+import FormaReveal from './FormaReveal.astro';
+import Footer from './Footer.astro';
+import type { Locale } from '../config/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<Base locale={locale}>
+  <Nav locale={locale} />
+  <main id="main" tabindex="-1">
+    <Hero locale={locale} />
+    <Approach locale={locale} />
+    <Projects locale={locale} />
+    <Transition />
+    <Studio locale={locale} />
+    <Services locale={locale} />
+    <FormaReveal locale={locale} />
+  </main>
+  <Footer locale={locale} />
+</Base>
+
+<script>
+  import '../scripts/scroll.ts';
+</script>
+
+<style>
+  main:focus {
+    outline: none;
+  }
+</style>

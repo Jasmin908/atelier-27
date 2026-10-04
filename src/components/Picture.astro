@@ -1,0 +1,48 @@
+---
+// Art-directed <picture> built from the derivative manifest.
+// `mobile` (optional) is a separate crop served below 900px.
+import manifest from '../data/images.json';
+
+type CropName = keyof typeof manifest;
+
+interface Props {
+  desktop: CropName;
+  mobile?: CropName;
+  alt: string;
+  sizes: string;
+  mobileSizes?: string;
+  eager?: boolean;
+  class?: string;
+}
+
+const { desktop, mobile, alt, sizes, mobileSizes = '100vw', eager = false, class: className } = Astro.props;
+
+const MOBILE_MEDIA = '(max-width: 899px)';
+const set = (list: { src: string; width: number }[]) => list.map((i) => `${i.src} ${i.width}w`).join(', ');
+
+const d = manifest[desktop];
+const m = mobile ? manifest[mobile] : null;
+---
+
+<picture class={className}>
+  {
+    m && (
+      <>
+        <source media={MOBILE_MEDIA} type="image/avif" srcset={set(m.avif)} sizes={mobileSizes} width={m.width} height={m.height} />
+        <source media={MOBILE_MEDIA} type="image/webp" srcset={set(m.webp)} sizes={mobileSizes} width={m.width} height={m.height} />
+        <source media={MOBILE_MEDIA} srcset={m.jpeg.src} width={m.width} height={m.height} />
+      </>
+    )
+  }
+  <source type="image/avif" srcset={set(d.avif)} sizes={sizes} />
+  <source type="image/webp" srcset={set(d.webp)} sizes={sizes} />
+  <img
+    src={d.jpeg.src}
+    width={d.width}
+    height={d.height}
+    alt={alt}
+    loading={eager ? 'eager' : 'lazy'}
+    decoding={eager ? 'sync' : 'async'}
+    fetchpriority={eager ? 'high' : undefined}
+  />
+</picture>

@@ -1,0 +1,229 @@
+{
+  "haus-am-hang-wide": {
+    "width": 2752,
+    "height": 1536,
+    "avif": [
+      {
+        "src": "/img/haus-am-hang-wide-1280.avif",
+        "width": 1280
+      },
+      {
+        "src": "/img/haus-am-hang-wide-1920.avif",
+        "width": 1920
+      },
+      {
+        "src": "/img/haus-am-hang-wide-2752.avif",
+        "width": 2752
+      }
+    ],
+    "webp": [
+      {
+        "src": "/img/haus-am-hang-wide-1280.webp",
+        "width": 1280
+      },
+      {
+        "src": "/img/haus-am-hang-wide-1920.webp",
+        "width": 1920
+      },
+      {
+        "src": "/img/haus-am-hang-wide-2752.webp",
+        "width": 2752
+      }
+    ],
+    "jpeg": {
+      "src": "/img/haus-am-hang-wide-1920.jpg",
+      "width": 1920,
+      "height": 1072
+    }
+  },
+  "haus-am-hang-portrait": {
+    "width": 1152,
+    "height": 1536,
+    "avif": [
+      {
+        "src": "/img/haus-am-hang-portrait-640.avif",
+        "width": 640
+      },
+      {
+        "src": "/img/haus-am-hang-portrait-1152.avif",
+        "width": 1152
+      }
+    ],
+    "webp": [
+      {
+        "src": "/img/haus-am-hang-portrait-640.webp",
+        "width": 640
+      },
+      {
+        "src": "/img/haus-am-hang-portrait-1152.webp",
+        "width": 1152
+      }
+    ],
+    "jpeg": {
+      "src": "/img/haus-am-hang-portrait-1152.jpg",
+      "width": 1152,
+      "height": 1536
+    }
+  },
+  "haus-am-hang-detail": {
+    "width": 976,
+    "height": 1220,
+    "avif": [
+      {
+        "src": "/img/haus-am-hang-detail-640.avif",
+        "width": 640
+      },
+      {
+        "src": "/img/haus-am-hang-detail-976.avif",
+        "width": 976
+      }
+    ],
+    "webp": [
+      {
+        "src": "/img/haus-am-hang-detail-640.webp",
+        "width": 640
+      },
+      {
+        "src": "/img/haus-am-hang-detail-976.webp",
+        "width": 976
+      }
+    ],
+    "jpeg": {
+      "src": "/img/haus-am-hang-detail-976.jpg",
+      "width": 976,
+      "height": 1220
+    }
+  },
+  "hof-08-wide": {
+    "width": 2528,
+    "height": 1696,
+    "avif": [
+      {
+        "src": "/img/hof-08-wide-960.avif",
+        "width": 960
+      },
+      {
+        "src": "/img/hof-08-wide-1600.avif",
+        "width": 1600
+      },
+      {
+        "src": "/img/hof-08-wide-2528.avif",
+        "width": 2528
+      }
+    ],
+    "webp": [
+      {
+        "src": "/img/hof-08-wide-960.webp",
+        "width": 960
+      },
+      {
+        "src": "/img/hof-08-wide-1600.webp",
+        "width": 1600
+      },
+      {
+        "src": "/img/hof-08-wide-2528.webp",
+        "width": 2528
+      }
+    ],
+    "jpeg": {
+      "src": "/img/hof-08-wide-1600.jpg",
+      "width": 1600,
+      "height": 1073
+    }
+  },
+  "hof-08-portrait": {
+    "width": 1357,
+    "height": 1696,
+    "avif": [
+      {
+        "src": "/img/hof-08-portrait-640.avif",
+        "width": 640
+      },
+      {
+        "src": "/img/hof-08-portrait-1100.avif",
+        "width": 1100
+      }
+    ],
+    "webp": [
+      {
+        "src": "/img/hof-08-portrait-640.webp",
+        "width": 640
+      },
+      {
+        "src": "/img/hof-08-portrait-1100.webp",
+        "width": 1100
+      }
+    ],
+    "jpeg": {
+      "src": "/img/hof-08-portrait-1100.jpg",
+      "width": 1100,
+      "height": 1375
+    }
+  },
+  "casa-linea-wide": {
+    "width": 2752,
+    "height": 1536,
+    "avif": [
+      {
+        "src": "/img/casa-linea-wide-1280.avif",
+        "width": 1280
+      },
+      {
+        "src": "/img/casa-linea-wide-1920.avif",
+        "width": 1920
+      },
+      {
+        "src": "/img/casa-linea-wide-2752.avif",
+        "width": 2752
+      }
+    ],
+    "webp": [
+      {
+        "src": "/img/casa-linea-wide-1280.webp",
+        "width": 1280
+      },
+      {
+        "src": "/img/casa-linea-wide-1920.webp",
+        "width": 1920
+      },
+      {
+        "src": "/img/casa-linea-wide-2752.webp",
+        "width": 2752
+      }
+    ],
+    "jpeg": {
+      "src": "/img/casa-linea-wide-1920.jpg",
+      "width": 1920,
+      "height": 1072
+    }
+  },
+  "casa-linea-portrait": {
+    "width": 1229,
+    "height": 1536,
+    "avif": [
+      {
+        "src": "/img/casa-linea-portrait-640.avif",
+        "width": 640
+      },
+      {
+        "src": "/img/casa-linea-portrait-1229.avif",
+        "width": 1229
+      }
+    ],
+    "webp": [
+      {
+        "src": "/img/casa-linea-portrait-640.webp",
+        "width": 640
+      },
+      {
+        "src": "/img/casa-linea-portrait-1229.webp",
+        "width": 1229
+      }
+    ],
+    "jpeg": {
+      "src": "/img/casa-linea-portrait-1229.jpg",
+      "width": 1229,
+      "height": 1536
+    }
+  }
+}

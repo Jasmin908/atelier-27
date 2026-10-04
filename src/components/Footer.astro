@@ -1,0 +1,129 @@
+---
+import FormaLink from './FormaLink.astro';
+import { LOCALES, type Locale } from '../config/site';
+import { getCopy } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getCopy(locale);
+const langs = (['de', 'en'] as const).map((code) => ({
+  code,
+  href: LOCALES[code].path,
+  hreflang: LOCALES[code].hreflang,
+  current: code === locale,
+}));
+---
+
+<footer class="footer grid" data-nav="paper">
+  <p class="footer__title label">{t.footer.title}</p>
+
+  <div class="footer__text">
+    <p>{t.footer.disclaimer}</p>
+    <p>
+      {t.footer.credit}
+      <FormaLink class="footer__credit">Forma Studio</FormaLink>
+    </p>
+    <p>{t.footer.imagery}</p>
+  </div>
+
+  <ul class="footer__lang label" aria-label={t.nav.language}>
+    {
+      langs.map((l, i) => (
+        <li>
+          {i > 0 && <span aria-hidden="true">/</span>}
+          <a href={l.href} lang={l.hreflang} hreflang={l.hreflang} aria-current={l.current ? 'true' : undefined}>
+            {l.code.toUpperCase()}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <p class="footer__copy label">{t.footer.copyright}</p>
+</footer>
+
+<style>
+  .footer {
+    background: var(--charcoal);
+    color: var(--ivory);
+    padding-block: clamp(56px, 9vh, 96px) clamp(28px, 5vh, 48px);
+    align-items: start;
+    row-gap: clamp(48px, 8vh, 96px);
+  }
+
+  .footer__title {
+    grid-column: 1 / 6;
+    font-weight: 650;
+    letter-spacing: 0.16em;
+  }
+
+  .footer__text {
+    grid-column: 7 / -1;
+    display: grid;
+    gap: 0.6em;
+    max-width: 34em;
+    color: var(--ink-2-dark);
+  }
+
+  .footer :global(.footer__credit) {
+    color: var(--ivory);
+    white-space: nowrap;
+  }
+
+  .footer :global(a.footer__credit) {
+    display: inline-flex;
+    align-items: baseline;
+    min-height: 44px;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .footer__lang {
+    grid-column: 1 / 6;
+    display: flex;
+    align-items: center;
+    margin-left: -7px;
+  }
+
+  .footer__lang li {
+    display: flex;
+    align-items: center;
+  }
+
+  .footer__lang a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding-left: 0.13em;
+  }
+
+  .footer__lang a[aria-current],
+  .footer__lang a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.45em;
+  }
+
+  .footer__copy {
+    grid-column: 7 / -1;
+    align-self: center;
+    color: var(--ink-2-dark);
+  }
+
+  @media (max-width: 899px) {
+    .footer {
+      row-gap: 32px;
+    }
+
+    .footer__title,
+    .footer__text,
+    .footer__lang,
+    .footer__copy {
+      grid-column: 1 / -1;
+    }
+  }
+</style>
