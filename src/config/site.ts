@@ -1,11 +1,10 @@
 // Central site configuration.
 
 /**
- * The real Forma Studio URL is not available yet.
- * While this is null, the CTA and footer credit render as plain text
- * without an href. Set it to the final URL to turn both into links.
+ * The live Forma Studio portfolio. The CTA and the footer credit link here.
+ * If this is set to null, both render as plain text without an href.
  */
-export const FORMA_STUDIO_URL: string | null = null;
+export const FORMA_STUDIO_URL: string | null = 'https://forma-webdesign.netlify.app/';
 
 /**
  * Production origin, e.g. "https://example.ch" (no trailing slash).

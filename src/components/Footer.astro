@@ -73,10 +73,9 @@ const langs = (['de', 'en'] as const).map((code) => ({
     white-space: nowrap;
   }
 
+  /* Inline padding enlarges the hit area without changing the line height */
   .footer :global(a.footer__credit) {
-    display: inline-flex;
-    align-items: baseline;
-    min-height: 44px;
+    padding-block: 12px;
     text-decoration: underline;
     text-underline-offset: 0.2em;
   }
